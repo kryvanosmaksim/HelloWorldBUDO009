@@ -1,32 +1,28 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class MagicNumbers : MonoBehaviour
 {
     #region Variables
 
-    private int _guess;
-    [SerializeField] private int max; // best practice! to show up in inspector
+    [SerializeField] private int max = 1000;
     [SerializeField] private int min;
+    [SerializeField] private TextMeshProUGUI displayText;
+
+    private int _guess;
+    private int _guessCount;
 
     #endregion
 
     #region Unity lifecycle
 
-    private void Start() // вызывается постоянно
+    private void Start()
     {
-        min = 0;
-        max = 1000;
-        Debug.Log($"Загадай число от {min} до {max}");
-
-        CalculateGuessAndLog(); // Cmd + R + M (Extract Method) - вынести строки в новый метод 
+        StartGame();
     }
 
-    private void Update() //вызывается каждый кадр
+    private void Update()
     {
-        // bool isPressed = Input.GetKeyDown(KeyCode.DownArrow); //принимает нажатие кнопки
-        // bool isPressed2 = Input.GetKeyUp(KeyCode.DownArrow); //принимает отпускание кнопки
-        // bool isPressed3 = Input.GetKey(KeyCode.DownArrow); //принимает все время нажатия кнопки
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             max = _guess;
@@ -41,15 +37,43 @@ public class MagicNumbers : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Debug.Log($"Ура! Твое число угадано и равно {_guess}!");
+            displayText.text += $"\nУра! Твое число угадано и равно {_guess}!";
+            displayText.text += $"\nКоличество затраченных ходов: {_guessCount}";
+            displayText.text += "\n";
+            RestartGame();
         }
     }
 
     #endregion
-    
-    private void CalculateGuessAndLog() // если есть копипаста, то лучше это вынести в отдельный метод
+
+    #region Private methods
+
+    private void CalculateGuessAndLog()
     {
         _guess = (max + min) / 2;
-        Debug.Log($"Твое число равно {_guess} ?");
+        _guessCount++;
+        displayText.text += $"\nТвое число равно {_guess}?";
     }
+
+    private void RestartGame()
+    {
+        min = 0;
+        max = 1000;
+        _guessCount = 0;
+        displayText.text += $"\nЗагадай число от {min} до {max}";
+
+        CalculateGuessAndLog();
+    }
+
+    private void StartGame()
+    {
+        min = 0;
+        max = 1000;
+        _guessCount = 0;
+        displayText.text = $"Загадай число от {min} до {max}";
+
+        CalculateGuessAndLog();
+    }
+
+    #endregion
 }
