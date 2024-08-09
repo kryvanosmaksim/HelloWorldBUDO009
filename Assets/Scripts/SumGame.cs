@@ -1,16 +1,17 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SumGame : MonoBehaviour
 {
     #region Variables
 
-    [SerializeField] private TextMeshProUGUI displayText;
-    private int max;
-    private int min;
-    private int moveCount;
-    private int sum = 0;
-    private int targetSum = 50;
+    [SerializeField] private TextMeshProUGUI _displayText;
+    private int _max;
+    private int _min;
+    private int _moveCount;
+    private int _sum = 0;
+    private int _targetSum = 50;
 
     #endregion
 
@@ -18,59 +19,68 @@ public class SumGame : MonoBehaviour
 
     private void Start()
     {
+        _displayText.text = "";
         StartGame();
     }
 
     private void Update()
     {
+        HandleInput();
+        CheckEndConditions();
+    }
+
+    private void CheckEndConditions()
+    {
+        if (_sum >= _targetSum)
+        {
+            _displayText.text += $"\nИгра окончена! \nКоличество затраченных ходов {_moveCount}";
+            StartGame();
+        }
+    }
+
+    private void HandleInput()
+    {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             AddToSumAndLog(1);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             AddToSumAndLog(2);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             AddToSumAndLog(3);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha4))
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             AddToSumAndLog(4);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha5))
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             AddToSumAndLog(5);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha6))
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
             AddToSumAndLog(6);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha7))
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
             AddToSumAndLog(7);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha8))
+        else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             AddToSumAndLog(8);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha9))
+        else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
             AddToSumAndLog(9);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space))
         {
-            sum = 0;
-            displayText.text += $"\nСумма равна: {sum}";
+            _sum = 0;
+            _displayText.text += $"\nСумма равна: {_sum}";
         }
-
-        if (sum >= targetSum)
-        {
-            displayText.text += $"\nИгра окончена! \nКоличество затраченных ходов {moveCount}";
-            RestartGame();
-        }
-            
     }
 
     #endregion
@@ -79,27 +89,19 @@ public class SumGame : MonoBehaviour
 
     private void AddToSumAndLog(int number)
     {
-        sum += number;
-        displayText.text += $"\nСумма равна: {sum}";
-        moveCount++;
+        _sum += number;
+        _displayText.text += $"\nСумма равна: {_sum}";
+        _moveCount++;
     }
     private void StartGame()
     {
-        moveCount = 0;
-        sum = 0;
-        min = 1;
-        max = 9;
-        displayText.text = $"\nНажми цифру от {min} до {max}";
+        _moveCount = 0;
+        _sum = 0;
+        _min = 1;
+        _max = 9;
+        _displayText.text += $"\nНажми цифру от {_min} до {_max}";
     }
     
-    private void RestartGame()
-    {
-        moveCount = 0;
-        sum = 0;
-        min = 1;
-        max = 9;
-        displayText.text += $"\nНажми цифру от {min} до {max}";
-    }
 
     #endregion
 }

@@ -56,9 +56,6 @@ ExportedObj/
 # Unity3D generated file on crash reports
 sysinfo.txt
 
-# Rider
-*.DotSettings
-
 # Builds
 *.apk
 *.aab
