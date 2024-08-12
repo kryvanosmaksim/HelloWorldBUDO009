@@ -8,6 +8,8 @@ public class Step : MonoBehaviour
     [SerializeField] private string _answers;
     [TextArea(3, 10)]
     [SerializeField] private string _description;
+    [SerializeField] private string _locationName;
+    [SerializeField] private Sprite _locationImage;
     [SerializeField] private Step[] _nextSteps;
 
     #endregion
@@ -15,12 +17,10 @@ public class Step : MonoBehaviour
     #region Properties
 
     public string Answers => _answers;
-    public string Description => _description; //returns значение
+    public string Description => _description;
+    public string LocationName => _locationName;
+    public Sprite LocationImage => _locationImage;
     public Step[] NextSteps => _nextSteps;
 
     #endregion
-
-    // [SerializeField] private Step _nextStep2;
-    // public Step NextStep => _nextStep;
-    // public Step NextStep2 => _nextStep2;
 }

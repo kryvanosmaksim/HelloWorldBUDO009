@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TextQuest : MonoBehaviour
 {
@@ -7,9 +8,10 @@ public class TextQuest : MonoBehaviour
 
     [SerializeField] private TMP_Text _descriptionLabel;
     [SerializeField] private TMP_Text _answerLabel;
+    [SerializeField] private TMP_Text _locationLabel;
+    [SerializeField] private Image _locationImage;
     [SerializeField] private Step _startStep;
     [SerializeField] private Step _currentStep;
-    // sfield - команда пишущая строку выше
 
     #endregion
 
@@ -23,6 +25,29 @@ public class TextQuest : MonoBehaviour
     private void Update()
     {
         ProcessInput();
+    }
+
+    #endregion
+
+    #region Private methods
+
+    private Sprite GetTransparentSprite()
+    {
+        Texture2D texture = new(1, 1);
+        texture.SetPixel(0, 0, new Color(0, 0, 0, 0));
+        texture.Apply();
+        return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+    }
+
+    private void ProcessInput()
+    {
+        for (int i = 1; i <= 9; i++)
+        {
+            if (Input.GetKeyDown(i.ToString()))
+            {
+                TryGoToNextStep(i);
+            }
+        }
     }
 
     private void SetCurrentStepAndUpdateUi(Step step)
@@ -49,20 +74,13 @@ public class TextQuest : MonoBehaviour
     {
         _descriptionLabel.text = _currentStep.Description;
         _answerLabel.text = _currentStep.Answers;
-    }
-
-    private void ProcessInput()
-    {
-        for (int i = 1; i <= 9; i++)
-        {
-            if (Input.GetKeyDown(i.ToString())) 
-            {
-                TryGoToNextStep(i);
-            }
-        }
+        _locationLabel.text = _currentStep.LocationName;
+        _locationImage.sprite = _currentStep.LocationImage ?? GetTransparentSprite();
     }
 
     #endregion
+
+    // sfield - команда пишущая строку выше
 }
 
 // Debug.Log($"Description == null '{_descriptionLabel == null}'");
