@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Step : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Step : MonoBehaviour
     [TextArea(3, 10)]
     [SerializeField] private string _description;
     [SerializeField] private string _locationName;
-    [SerializeField] private Sprite _locationImage;
+    [SerializeField] private Sprite _locationSprite;
     [SerializeField] private Step[] _nextSteps;
 
     #endregion
@@ -19,7 +20,7 @@ public class Step : MonoBehaviour
     public string Answers => _answers;
     public string Description => _description;
     public string LocationName => _locationName;
-    public Sprite LocationImage => _locationImage;
+    public Sprite LocationSprite => _locationSprite;
     public Step[] NextSteps => _nextSteps;
 
     #endregion
